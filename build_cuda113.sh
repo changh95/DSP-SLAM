@@ -168,35 +168,35 @@ if [[ $* == *--create-conda-env* ]] ; then
   conda env create -f environment_cuda113.yml
 fi # --create-conda-env
 
-conda_base=$(conda info --base)
-source "$conda_base/etc/profile.d/conda.sh"
-conda activate dsp-slam
+#conda_base=$(conda info --base)
+#source "$conda_base/etc/profile.d/conda.sh"
+#conda activate dsp-slam
 
-highlight "Installing mmdetection and mmdetection3d ..."
-pip install pycocotools==2.0.1
-pip install mmcv-full==1.4.0 -f https://download.openmmlab.com/mmcv/dist/cu113/torch1.10.0/index.html
-pip install mmdet==2.14.0
-pip install mmsegmentation==0.14.1
-cd Thirdparty
-git_clone "git clone https://github.com/JingwenWang95/mmdetection3d.git"
-cd mmdetection3d
-pip install -v -e .
-cd ../..
+#highlight "Installing mmdetection and mmdetection3d ..."
+#pip install pycocotools==2.0.1
+#pip install mmcv-full==1.4.0 -f https://download.openmmlab.com/mmcv/dist/cu113/torch1.10.0/index.html
+#pip install mmdet==2.14.0
+#pip install mmsegmentation==0.14.1
+#cd Thirdparty
+#git_clone "git clone https://github.com/JingwenWang95/mmdetection3d.git"
+#cd mmdetection3d
+#pip install -v -e .
+#cd ../..
 
-highlight "building DSP-SLAM ..."
-if [ ! -d build ]; then
-  mkdir build
-fi
-cd build
-conda_python_bin=`which python`
-conda_env_dir="$(dirname "$(dirname "$conda_python_bin")")"
-cmake \
-  -DOpenCV_DIR="$(pwd)/../Thirdparty/opencv/build" \
-  -DEigen3_DIR="$(pwd)/../Thirdparty/eigen/install/share/eigen3/cmake" \
-  -DPangolin_DIR="$(pwd)/../Thirdparty/Pangolin/build" \
-  -DPYTHON_LIBRARIES="$conda_env_dir/lib/libpython3.7m.so" \
-  -DPYTHON_INCLUDE_DIRS="$conda_env_dir/include/python3.7m" \
-  -DPYTHON_EXECUTABLE="$conda_env_dir/bin/python3.7" \
-  ..
-make -j8
+#highlight "building DSP-SLAM ..."
+#if [ ! -d build ]; then
+#  mkdir build
+#fi
+#cd build
+#conda_python_bin=`which python`
+#conda_env_dir="$(dirname "$(dirname "$conda_python_bin")")"
+#cmake \
+#  -DOpenCV_DIR="$(pwd)/../Thirdparty/opencv/build" \
+#  -DEigen3_DIR="$(pwd)/../Thirdparty/eigen/install/share/eigen3/cmake" \
+#  -DPangolin_DIR="$(pwd)/../Thirdparty/Pangolin/build" \
+#  -DPYTHON_LIBRARIES="$conda_env_dir/lib/libpython3.7m.so" \
+#  -DPYTHON_INCLUDE_DIRS="$conda_env_dir/include/python3.7m" \
+#  -DPYTHON_EXECUTABLE="$conda_env_dir/bin/python3.7" \
+#  ..
+#make -j8
 
